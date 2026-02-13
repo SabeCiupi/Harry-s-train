@@ -1,0 +1,105 @@
+/*CIUPITU Alexandra-Isabela - 311CC*/
+==============================TRENULETUL LUI HARRY=============================
+
+STRUCTURI DE DATE:
+-> vagon = pentru definirea fiecarul vagon intr-o lista dublu inlantuita;
+-> tren = pentru definirea trenului care are in componenta mai multe vagoane, 
+o locomotiva si un mecanic;
+-> nod = fiecare nod dintr-o coada reprezentata de o lista dublu inlantuita
+-> coada = care retine primul si ultimul element din coada
+
+FUNCTIILE PROGRAMULUI:
+I. Functii pentru gestionarea cozii:
+a.void initCoada(coada* c); - initializeaza o coada c vida.
+b. void introducere(coada* c, char* s); - introduce in coada un nou element 
+care sa retina valoarea sirului s.
+c. char* extragere(coada* c); - extrage valoarea primului element din coada c
+si elibereaza memoria nodului extras.
+d. void elibereazaCoada(coada** c); - elibereaza intreaga memoria alocata cozii.
+
+II. Functii pentru realizarea operatiilor pe tren:
+a. tren* init(void); - initializeaza trenul alocand memorie si atribuindu-i un 
+vagon inscriptionat cu caracterul #.
+
+1. Operatii de tip UPDATE
+a. void mutaStanga(tren* t); - corespunzatoare comenzii "MOVE_LEFT", deplaseaza
+mecanicul spre stanga, iar in cazul in care se afla in primul vagon, este
+deplasat in ultimul vagon.
+b. void mutaDreapta(tren* t); - corespunzatoare comenzii "MOVE_RIGHT", 
+deplaseaza mecanicul spre dreapta, iar in cazul in care se afla in ultimul vagon
+ataseaza un nou vagon inscriptionat cu '#' si muta mecanicul in noul vagon creat.
+c. void scrie(tren* t, char c); - corespunzatoare comenzii "WRITE", schimba
+inscriptia vagonului in care se afla mecanicul cu caracterul c.
+d. void stergereVagon(tren* t); - corespunzatoare comenzii "CLEAR_CELL", 
+decupleaza vagonul in care se afla mecanicul (acesta fiind mutat in vagonul
+din stanga) prin refacerea legaturilor si eliberarea de memorie astfel incat 
+vagonul sa fie sters.
+e. void stergereCompleta(tren** t); - corespunzatoare comenzii "CLEAR_ALL",
+sterge vagoanele trenului aducandu-l la starea lui initiala (|#|)
+f. void elibereazaTren(tren** t); - elibereaza intreaga memorie alocata
+trenului.
+g. void inserareStanga(tren* t, char c); - corespunzatoare comenzii
+"INSERT_LEFT", insereaza la stanga vagonului in care se afla mecanicul un nou
+vagon inscriptionat cu caracterul c, mai putin in cazul in care mecanicul se
+afla in primul vagon afisandu-se un mesaj de eroare.
+h. void inserareDreapta(tren* t, char c); - corespunzatoare comenzii
+"INSERT_RIGHT", insereaza la dreapta vagonului in care se afla mecanicul un nou
+vagon inscriptionat cu caracterul c.
+
+2. Operatii de tip SEARCH
+a. void cautare(tren* t, char* s); - corespunzatoare comenzii "SEARCH", 
+realizeaza o cautare circulara pornind de la vagonul in care se afla mecanicul
+a sirului s, parcurgand toate vagoanele (fara locomotiva), pana la vagonul 
+initial. Daca se gaseste sirul, mecanicul se muta in vagonul inscriptionat cu
+primul caracter din sir (prima pozitie din sir), altfel afiseaza un mesaj de
+eroare.
+b. void cautareStanga(tren* t, char* s); - corespunzatoare comenzii
+"SEARCH_LEFT", cauta sirul s pornind de la pozitia mecanicului pana la
+intalnirea primului vagon inclusiv. Daca sirul este gasit, mecanicul este mutat
+in vagonul inscriptionat cu ultimul caracter din sir, altfel se afiseaza un
+mesaj de eroare.
+c. void cautareDreapta(tren* t, char* s); - corespunzatoare comenzii
+"SEARCH_RIGHT", cauta sirul s pornind de la pozitia mecanicului pana la
+intalnirea ultimului vagon inclusiv. Daca sirul este gasit, mecanicul este
+mutat in vagonul inscriptionat cu ultimul caracter din sir, altfel se afiseaza
+un mesaj de eroare.
+
+3. Operatii de tip QUERY
+a. void arataMecanic(tren* t); - corespunzatoare comenzii "SHOW_CURRENT",
+afiseaza inscripria vagonului in care se afla mecanicul.
+b. void afisareTren(tren* t); - corespunzatoare comenzii "SHOW", afiseaza
+trenul, vagonul in care se afla mecanicul fiind delimitat de restul trenului
+prin '|', in fata si spate.
+c. void schimbaOrd(coada* c); - corespunzatoare comenzii "SWITCH", inverseaza
+ordinea elementelor din coada.
+
+4. Operatia "EXECUTE" este realizata in functia main.
+
+PREZENTAREA VARIABILELOR:
+~ tren* t = retine trenul pe care il vom folosi in rezolvarea sarcinilor;
+~ coada* c = initializeaza coada unde vor fi retinute comenzile de tip UPDATE
+si SEARCH;
+~ FILE* file = este utilizata pentru citirea din fisier a numarului de comenzi
+respectiv comenzile;
+~ FILE* file2 = este utilizata pentru stergerea continutului de la inceput a 
+fisierului .out si scrie in fisier pe parcursul rularii  
+~ int nr = retine numarul de comenzi obtinut din fisier ca sir de caractere si
+convertit in intreg;
+~ variabile de manevra: int i, lung; char car;
+~ char sir[20] = retine o linie din fisier;
+~ char *sir2 = extrage un sir din coada;
+
+LOGICA PROGRAMULUI:
+Dupa ce am extras numarul de comenzi din fisier, citim de nr ori o linie din
+fisier. Verificam daca comanda este de tip "EXECUTE" si extragem in sir2, o
+comanda din coada pe care sa o aplicam trenuletului, la final eliberand memoria
+alocata sirului. In caz contrar, verificam pe rand daca comanda nu este de tip
+QUERY ("SHOW_CURRENT", "SHOW", "SWITCH") si o aplicam direct. Daca niciunul
+dintre cazuri nu e indeplinit, atunci comanda citita din fisier este de tip
+UPDATE sau SEARCH si nu este executata direct, ci introdusa in coada c.
+La final eliberam restul de memorie si inchidem fisierele.
+
+Pe calculatorul personal imi trece toate testele:
+Total: 100/100
+Valgrind: 20/20
+===============================================================================
